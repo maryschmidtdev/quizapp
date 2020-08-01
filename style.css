@@ -36,6 +36,7 @@ p {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   height: 400px;
   background-color: lightsteelblue;
   background: rgba(224, 216, 216, 0.5);
@@ -50,4 +51,10 @@ form input[type="radio"] + label {
 
 form input[type="radio"] {
   font-size: 10px;
+}
+
+ul {
+  list-style: none;
+  font-size: 15px;
+  justify-self: flex-start;
 }

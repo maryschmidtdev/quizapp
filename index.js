@@ -38,16 +38,21 @@ function submitAnswer() {
   });
 }
 
-function displayResults() {
-  let resultHtml = $(
+function getResultHtml() {
+  return $(
     `<div class="results">
-        <form id="js-restart-quiz">
-        <legend>Your Score is: ${STORE.score}/${STORE.questions.length}</legend>
-        </div>
-        <div>
-        <button type="submit" id="restart">Restart Quiz</button>
-        </div>`
+            <form id="js-restart-quiz">
+            <legend>Your Score is: ${STORE.score}/${STORE.questions.length}</legend>
+            </div>
+            <div>
+            <button type="submit" id="restart">Restart Quiz</button>
+            </div>`
   );
+}
+
+function displayResults() {
+  let resultHtml = getResultHtml();
+
   STORE.questionNumber = 0;
   STORE.score = 0;
   $("#main-container").html(resultHtml);
@@ -66,7 +71,7 @@ function updateQuestionAndScore() {
     STORE.questionNumber + 1
   }/${STORE.questions.length}
     </li>
-    <li id="js-score">Score: ${STORE.score}</li>
+    <li id="js-score">Score: ${STORE.score}/${STORE.questions.length}</li>
     </ul>`);
   $("#question-number-and-score").html(html);
 }
@@ -81,13 +86,11 @@ function updateOptions() {
   }
 }
 
-function generateQuestion() {
-  updateQuestionAndScore();
-  let questionObj = STORE.questions[STORE.questionNumber];
-  const questionHtml = $(`
+function getQuestionHtml(question) {
+  return $(`
     <div>
     <form id="js-questions">
-    <h3>${questionObj.question}</h3>
+    <h3>${question}</h3>
     <div class="js-options">
     </div>
     <button type="submit" id="answer">Submit</button>
@@ -95,6 +98,12 @@ function generateQuestion() {
   </form>
     </div>
 `);
+}
+
+function generateQuestion() {
+  updateQuestionAndScore();
+  let questionObj = STORE.questions[STORE.questionNumber];
+  const questionHtml = getQuestionHtml(questionObj.question);
   $("#main-container").html(questionHtml);
   updateOptions();
   $("#next-question").hide();
